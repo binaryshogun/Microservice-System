@@ -16,6 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseInMemoryDatabase("InMemoryDb");
 });
 
+// Adding repository implementation for IPlatformRepository dependency request
+builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
