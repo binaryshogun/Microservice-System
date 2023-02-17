@@ -12,7 +12,8 @@ builder.Services.AddSwaggerGen();
 
 // Adding DbContext to the container
 // Using InMemoryDatabase in development mode 
-builder.Services.AddDbContext<AppDbContext>(options => {
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
     options.UseInMemoryDatabase("InMemoryDb");
 });
 
@@ -33,5 +34,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+SeedData.PopulateData(app);
 
 app.Run();

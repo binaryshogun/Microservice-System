@@ -23,7 +23,7 @@ namespace PlatformService.Data
 
         public IEnumerable<Platform> GetAllPlatforms()
         {
-            return context.Platforms.ToList(); 
+            return context.Platforms.ToList();
         }
 
         public Platform? GetPlatformById(int id)
