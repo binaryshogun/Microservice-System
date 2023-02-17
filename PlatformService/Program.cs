@@ -20,6 +20,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Adding repository implementation for IPlatformRepository dependency request
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 
+// Register automapper as a service
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
