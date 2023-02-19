@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
+using PlatformService.Services.Sync.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Adding repository implementation for IPlatformRepository dependency request
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+
+// Adding sync http client to the container
+builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+
 
 // Register automapper as a service
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
