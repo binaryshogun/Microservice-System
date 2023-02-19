@@ -1,8 +1,7 @@
-# Nodeport service
 apiVersion: v1
 kind: Service
 metadata:
-  name: platform-service-np-service
+  name: platforms-nodeport-service
 spec:
   type: NodePort
   selector:
