@@ -1,6 +1,6 @@
 {
     "CommandsService": {
-      "Post": "http://commandsservice-clusterip-service/api/c/platforms"
+      "Post": "http://commandsservice-clusterip-service:80/api/c/platforms"
     }
   }
   
