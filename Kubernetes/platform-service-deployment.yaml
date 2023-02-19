@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: platform-service-deployment
+  name: platformservice-deployment
 spec:
   replicas: 1
   selector:
@@ -22,3 +22,18 @@ spec:
             requests:
               memory: 512Mi
               cpu: "1"
+---
+# Cluster IP service
+apiVersion: v1
+kind: Service
+metadata:
+  name: platforms-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: platformservice
+  ports:
+  - name: platformservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
