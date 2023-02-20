@@ -19,7 +19,7 @@ if (builder.Environment.IsProduction())
     {
         // Connection string using password from user-secrets 'platformdbPassword' secret
         options.UseSqlServer($"{builder.Configuration.GetConnectionString("PlatformsConnection")}"
-            + $"Password={builder.Configuration["platformsdbPassword"]}");
+            + $"Password={Environment.GetEnvironmentVariable("platformsdbPassword")}");
     });
 }
 else
