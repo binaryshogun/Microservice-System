@@ -13,8 +13,14 @@ spec:
         app: platformservice
     spec:
       containers:
-        - name: platformservice
-          image: alexanderkarpovich/platformservice:latest
+      - name: platformservice
+        image: alexanderkarpovich/platformservice:latest
+        env:
+        - name: platformsdbPassword
+          valueFrom:
+            secretKeyRef:
+              name: mssql
+              key: SA_PASSWORD
 ---
 # Cluster IP service
 apiVersion: v1
