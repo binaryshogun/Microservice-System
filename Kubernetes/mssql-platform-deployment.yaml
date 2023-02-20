@@ -15,10 +15,6 @@ spec:
       containers:
       - name: mssql
         image: mcr.microsoft.com/mssql/server:2022-latest
-        resources:
-          limits:
-            memory: "1024Mi"
-            cpu: "2"
         ports:
         - containerPort: 1433
         env:
@@ -26,7 +22,7 @@ spec:
           value: "Express"
         - name: ACCEPT_EULA
           value: "Y"
-        - name: SA_PASSWORD
+        - name: MSSQL_SA_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mssql

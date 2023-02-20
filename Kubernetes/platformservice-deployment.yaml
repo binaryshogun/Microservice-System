@@ -15,13 +15,6 @@ spec:
       containers:
         - name: platformservice
           image: alexanderkarpovich/platformservice:latest
-          resources:
-            limits:
-              memory: 1024Mi
-              cpu: "2"
-            requests:
-              memory: 512Mi
-              cpu: "1"
 ---
 # Cluster IP service
 apiVersion: v1
