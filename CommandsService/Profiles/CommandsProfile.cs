@@ -15,7 +15,7 @@ namespace CommandsService.Profiles
             CreateMap<PlatformPublishedDTO, Platform>().ForMember(p => p.PlatformId, options =>
             {
                 options.MapFrom(src => src.Id);
-            });
+            }).ForMember(p => p.Id, options => options.Ignore());
         }
     }
 }
