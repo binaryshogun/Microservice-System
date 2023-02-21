@@ -37,4 +37,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.MapControllers();
 
+PrepareDatabase.PopulateData(app);
+
 app.Run();
