@@ -1,6 +1,7 @@
 using CommandsService.Data;
 using CommandsService.EventProcessing;
 using CommandsService.Services.AsyncMessaging;
+using CommandsService.Services.SyncMessaging.gRPC;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddHostedService<MessageBusSubscriber>();
 
 builder.Services.AddScoped<ICommandRepository, CommandRepository>();
+builder.Services.AddScoped<IPlatformDataClient, PlatformDataClient>();
+ 
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 var app = builder.Build();
