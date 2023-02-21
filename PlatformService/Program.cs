@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
 using PlatformService.Services.AsyncMessaging;
+using PlatformService.Services.SyncMessaging.gRPC;
 using PlatformService.Services.SyncMessaging.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register automapper as a service
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+// Adding gRPC to the container
+builder.Services.AddGrpc();
 
 // Adding DbContext to the container
 if (builder.Environment.IsProduction())
@@ -40,8 +46,6 @@ builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 // Adding async messaging message bus client to the container
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
-// Register automapper as a service
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -54,6 +58,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 app.MapControllers();
+
+// Mapping gRPC service as endpoint
+app.MapGrpcService<GrpcPlatformService>();
 
 SeedData.PopulateData(app, app.Environment.IsProduction());
 
