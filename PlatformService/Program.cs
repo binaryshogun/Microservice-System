@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
-using PlatformService.Services.Sync.Http;
+using PlatformService.Services.SyncMessaging.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 

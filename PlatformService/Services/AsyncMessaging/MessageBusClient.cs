@@ -3,7 +3,7 @@ using System.Text.Json;
 using PlatformService.DTOs;
 using RabbitMQ.Client;
 
-namespace PlatformService.Services.Async
+namespace PlatformService.Services.AsyncMessaging
 {
     public class MessageBusClient : IMessageBusClient
     {
