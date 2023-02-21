@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
+using PlatformService.Services.AsyncMessaging;
 using PlatformService.Services.SyncMessaging.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,8 +36,10 @@ else
 
 // Adding repository implementation for IPlatformRepository dependency request
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
-// Adding sync http client to the container
+// Adding sync messaging http client to the container
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+// Adding async messaging message bus client to the container
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 // Register automapper as a service
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
