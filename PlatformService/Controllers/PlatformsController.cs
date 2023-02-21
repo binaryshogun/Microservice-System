@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data;
 using PlatformService.DTOs;
 using PlatformService.Models;
+using PlatformService.Services.AsyncMessaging;
 
 namespace PlatformService.Controllers
 {
@@ -12,11 +13,16 @@ namespace PlatformService.Controllers
     {
         private readonly IPlatformRepository repository;
         private readonly IMapper mapper;
+        private readonly IMessageBusClient messageBusClient;
 
-        public PlatformsController(IPlatformRepository repository, IMapper mapper)
+        public PlatformsController(
+            IPlatformRepository repository, 
+            IMapper mapper,
+            IMessageBusClient messageBusClient)
         {
-            this.mapper = mapper;
             this.repository = repository;
+            this.mapper = mapper;
+            this.messageBusClient = messageBusClient;
         }
 
         [HttpGet]
@@ -51,6 +57,19 @@ namespace PlatformService.Controllers
             repository.SaveChanges();
 
             var platformReadDTO = mapper.Map<PlatformReadDTO>(platform);
+
+            // Send Async Message
+            try
+            {
+                var platformPublishedDTO = mapper.Map<PlatformPublishedDTO>(platformReadDTO);
+                platformPublishedDTO.Event = "Platform_Published";
+                
+                messageBusClient.PublishNewPlatform(platformPublishedDTO);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Could not send message asynchronously: {ex.Message}");
+            }
 
             return CreatedAtAction(nameof(GetPlatformById), new { Id = platformReadDTO.Id }, platformReadDTO);
         }
