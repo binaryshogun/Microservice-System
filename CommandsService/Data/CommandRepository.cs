@@ -28,7 +28,7 @@ namespace CommandsService.Data
             {
                 throw new ArgumentNullException(nameof(platform));
             }
-            
+
             context.Platforms.Add(platform);
         }
 
@@ -39,7 +39,7 @@ namespace CommandsService.Data
 
         public Command? GetCommand(int platformId, int commandId)
         {
-            return context.Commands.FirstOrDefault(c => 
+            return context.Commands.FirstOrDefault(c =>
                 c.PlatformId == platformId && c.Id == commandId);
         }
 
@@ -53,6 +53,11 @@ namespace CommandsService.Data
         public bool PlatformExists(int platformId)
         {
             return context.Platforms.Find(platformId) is not null;
+        }
+
+        public bool ExternalPlatformExists(int externalPlatformId)
+        {
+            return context.Platforms.Any(p => p.PlatformId == externalPlatformId);
         }
 
         public bool SaveChanges()
