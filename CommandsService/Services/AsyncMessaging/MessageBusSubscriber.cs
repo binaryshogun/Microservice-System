@@ -42,7 +42,7 @@ namespace CommandsService.Services.AsyncMessaging
                 eventProcessor.ProcessEvent(notificationMessage);
             };
 
-            channel.BasicConsume(queueName, true, consumer);
+            channel?.BasicConsume(queueName, true, consumer);
 
             return Task.CompletedTask;
         }
